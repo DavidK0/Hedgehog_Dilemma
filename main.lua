@@ -50,14 +50,6 @@ function beginContact(a, b, coll)
 	end
 end
 
-function table.removeValue(t, value)
-	for k, v in pairs(t) do
-		if(v == value) then
-			t[k] = nil
-		end
-	end
-end
-
 function endContact(a, b, coll)
 	aObj = a:getUserData()
 	bObj = b:getUserData()
