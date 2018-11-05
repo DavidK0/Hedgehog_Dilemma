@@ -6,6 +6,11 @@ function loadImgs(root)
 	for i = 1, 1 do
 		table.insert(spikeImgs, love.graphics.newImage(root .. "spikes/spike" .. i .. ".png"))
 	end
+	
+	tracks = {}
+	for i = 1, 10 do
+		table.insert(tracks, love.audio.newSource("assets/music/track"..i..".mp3", "static"))
+	end
 	wallImg = love.graphics.newImage(root .. "tiles.png")
 	doorImg = love.graphics.newImage(root .. "door.png")
 	doorImg2 = love.graphics.newImage(root .. "door2.png")
