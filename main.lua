@@ -8,6 +8,7 @@ require "PushableWall"
 require "Camera"
 require "WinTrigger"
 require "GlassWall"
+require "Physics"
 gamera = require "Gamera"
 
 function love.load()
