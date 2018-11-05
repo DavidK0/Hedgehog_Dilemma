@@ -6,4 +6,5 @@ make decent menu graphics
 make controls option on main menu
 touching spikes decreases global score
 make player hitbox elliptical
-randomize texture walls
+randomize wall texture
+randomize spike texture

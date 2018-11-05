@@ -31,7 +31,7 @@ function love.load()
 	--currentTrack:setLooping(true)
 	--currentTrack:play()
 	cam = gamera.new(0,0,77*worldWidth,77*worldHeight)
-	gameState = "title" --"title", "mainMenu", "game", or "win"
+	gameState = "title" --"title", "mainMenu", "controls", "game", or "win"
 	menuTimer = newTimer()
 	titleDelay = 1
 	killedByDoor = false
@@ -42,9 +42,11 @@ function love.keypressed(k)
 		love.event.quit()
 	end
 	if tonumber(k) and gameState == "mainMenu" then
-	
+		gameState = "controls"
 	elseif gameState == "mainMenu" then
 		gameState = "game"
+	elseif gameState == "controls" then
+		gameState = "mainMenu"
 	end
 end
 
@@ -102,6 +104,8 @@ function love.draw()
 	elseif gameState == "mainMenu" then
 		love.graphics.setColor(1,1,1,1)
 		love.graphics.draw(mainMenuImg, 0, 0)
+	elseif gameState == "controls" then
+		love.graphics.draw(controlsImg, 0, 0)
 	elseif gameState == "game" then
 		cam:draw(function(l,t,w,h)
 			--love.graphics.setColor(1, 0, 0);
