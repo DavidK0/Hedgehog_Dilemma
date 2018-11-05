@@ -14,7 +14,7 @@ gamera = require "Gamera"
 loadImgs("/assets/")
 respawn = false
 hasWon = false
-spikeDeathRespawnDelay = 80
+spikeDeathRespawnDelay = 100
 respawnTimer = 0
 function love.load()
 	--love.physics.setMeter(1)
