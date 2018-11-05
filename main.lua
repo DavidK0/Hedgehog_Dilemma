@@ -105,7 +105,12 @@ function love.draw()
 	elseif gameState == "game" then
 		cam:draw(function(l,t,w,h)
 			--love.graphics.setColor(1, 0, 0);
-			love.graphics.draw(background, 0, 0, 0, 2)
+			for x = 1, 10000, background:getWidth() do
+				for y = 1, 10000, background:getHeight() do
+					love.graphics.draw(background, x, y, 0, 2)
+				end
+			end
+			
 			for k, v in pairs(buttons) do 
 				v:draw()
 			end
