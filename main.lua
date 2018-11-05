@@ -1,5 +1,3 @@
-width = love.graphics.getWidth() --Screen width
-height = love.graphics.getHeight() --Screen height
 require "Load"
 require "Player"
 require "Wall"
@@ -10,16 +8,17 @@ require "PushableWall"
 require "Camera"
 require "WinTrigger"
 require "GlassWall"
---add comment
 gamera = require "Gamera"
-loadImgs("/assets/")
-respawn = false
-hasWon = false
-spikeDeathRespawnDelay = 80
-respawnTimer = 0
+
 function love.load()
-	--love.physics.setMeter(1)
-	world = love.physics.newWorld(0, 0, true)
+	loadImgs("/assets/")
+	respawn = false
+	hasWon = false
+	spikeDeathRespawnDelay = 80
+	respawnTimer = 0
+	width = love.graphics.getWidth() --Screen width
+	height = love.graphics.getHeight() --Screen height
+	world = love.physics.newWorld(0, 0, true) -- meter defaults to 30
 	world:setCallbacks(beginContact, endContact, preSolve, postSolve)
 	player1 = Player(world, width/2, height/2, {up = "w", down = "s", left = "a", right = "d"}, 4.0)
 	player2 = Player(world, width/2 + 50, height/2, {up = "up", down = "down", left  = "left", right = "right"}, 3.0)
@@ -27,57 +26,10 @@ function love.load()
 	walls = {}
 	buttons = {}
 	wallThickness = 600.0/14
-	--table.insert(walls, Wall(world, 0,height/2, wallThickness, height))
-	--table.insert(walls, Wall(world, width,height/2, wallThickness, height))
-	--table.insert(walls, Wall(world, width/2,0, width, wallThickness))
-	--table.insert(walls, Wall(world, width/2,height, width, wallThickness))
 	worldWidth, worldHeight = loadMap("/assets/map.txt")
 	src1:setLooping(true)
 	--src1:play()
 	cam = gamera.new(0,0,77*worldWidth,77*worldHeight)
-end
-
-function beginContact(a, b, coll)
-	aObj = a:getUserData()
-	bObj = b:getUserData()
-	if(aObj ~= nil and bObj ~= nil) then 
-		if(aObj.beginCollision ~= nil) then
-			aObj:beginCollision(bObj, coll)
-		end
-		if(bObj.beginCollision ~= nil) then
-			bObj:beginCollision(aObj, coll)
-		end
-	end
-end
-
-function endContact(a, b, coll)
-	aObj = a:getUserData()
-	bObj = b:getUserData()
-	if(aObj ~= nil and bObj ~= nil) then 
-		if(aObj.endCollision ~= nil) then
-			aObj:endCollision(bObj, coll)
-		end
-		if(bObj.endCollision ~= nil) then
-			bObj:endCollision(aObj, coll)
-		end
-	end
-end
- 
-function preSolve(a, b, coll)
-	aObj = a:getUserData()
-	bObj = b:getUserData()
-	if(aObj ~= nil and bObj ~= nil) then 
-		if(aObj.preSolve ~= nil) then
-			aObj:preSolve(bObj, coll)
-		end
-		if(bObj.preSolve ~= nil) then
-			bObj:preSolve(aObj, coll)
-		end
-	end
-end
- 
-function postSolve(a, b, coll, normalimpulse, tangentimpulse)
- 
 end
 
 function love.keypressed(k)
@@ -87,7 +39,6 @@ function love.keypressed(k)
 end
 
 function love.update(dt)
-	
 	player1:update(dt)
 	player2:update(dt)
 	world:update(dt)
@@ -126,7 +77,6 @@ function love.draw()
 		love.graphics.draw(background, 0, 0, 0, 2)
 		for k, v in pairs(buttons) do 
 			v:draw()
-			--print("ok")
 		end
 		for k, v in ipairs(objects) do
 			v:draw()
@@ -135,15 +85,8 @@ function love.draw()
 		for k, v in ipairs(walls) do
 			v:draw()
 		end
-		--print(buttons["b"])
 		player1:draw()
 		player2:draw()
 	end)
-	end
-end
-
-function concatTable(t1, t2)
-	for k, v in ipairs(t2) do
-		table.insert(t1, v)
 	end
 end

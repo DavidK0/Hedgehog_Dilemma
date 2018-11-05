@@ -36,3 +36,9 @@ end
 function math.magXvec(mag, vec)
 	return {mag*vec[1],mag*vec[2]}
 end
+
+function concatTable(t1, t2)
+	for k, v in ipairs(t2) do
+		table.insert(t1, v)
+	end
+end
