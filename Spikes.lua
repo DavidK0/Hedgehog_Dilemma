@@ -6,14 +6,14 @@ end
 
 --run once in love.load; initializes values used for working with spikes
 function loadSpikes(num) --optional number of spikes
-	numSpikes =  num or 20 --the total number of spikes that eject for hedge
+	numSpikes =  num or 40 --the total number of spikes that eject for hedge
 	spikes = {} --array to hold each spike object
 	spikeWidth = 3 --the collision box width
 	spikeHeight = 16 --the collision box height
 	spikeSpeed = 2700 --the speed of a spike in ? units
 	spikeDelay = 2 --number of seconds the spikes display until they fire
 	spikeWiggle = 3 --amount the spikes wiggle; 0 for no wiggle
-	spikeVariation = 3 --variation in the way spikes are spread around the ellipse
+	spikeVariation = 0 --variation in the way spikes are spread around the ellipse
 	spikeGrowR = 10 --distance the spikes grow during spikeDelay
 end
 

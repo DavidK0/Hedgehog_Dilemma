@@ -65,7 +65,7 @@ function playerEndCollision(player, other, coll)
 end
 
 function playerPreSolve(player, other, coll)
-	if(other.tag == "Door") then
+	if(other.tag == "Door" and not(respawn)) then
 		local px, py = player.body:getPosition()
 		local wx, wy = other.body:getPosition()
 		if(other.axis == 0) then 
