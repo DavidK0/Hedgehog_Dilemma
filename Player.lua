@@ -2,7 +2,7 @@ require "Spikes"
 require "Timer"
 loadSpikes()
 
-hedgehogScale = 2
+hedgehogScale =2.1
 
 function Player(world, x, y, c, p)
 	local player = {
