@@ -76,18 +76,10 @@ function love.update(dt)
 				respawn = false
 				player1.respawn = false
 				player2.respawn = false
+				killedByDoor = false
 			end
 			respawnTimer = respawnTimer - 1
-			player1.body:setLinearVelocity(0, 0)
-			player1.body:setPosition(player1.spawn.x, player1.spawn.y)
-			player1.flashTimer.time = 0
-			player2.body:setLinearVelocity(0, 0)
-			player2.body:setPosition(player2.spawn.x, player2.spawn.y)
-			player2.flashTimer.time = 0
-			respawn = false
-			player1.respawn = false
-			player2.respawn = false
-			killedByDoor = false
+			
 		end
 		updateAcres(dt)
 		if hasWon then gameState = "win" end
