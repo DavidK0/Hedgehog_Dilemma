@@ -21,7 +21,7 @@ end
 
 function BlockButton(world, x, y, width, height, doors)
 	blockButton = Button(world, x, y, width, height, doors)
-	blockButton.fixture:setUserData("BlockButton")
+	blockButton.fixture:setUserData(blockButton)
 	blockButton.beginCollision = blockButtonBeginCollision
 	blockButton.endCollision = blockButtonEndCollision
 	return blockButton

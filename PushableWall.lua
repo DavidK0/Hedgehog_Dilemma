@@ -21,7 +21,7 @@ function PushableWall(world, x, y, width, height, destroyable)
 end
 
 function pushableWallBeginCollision(wall, other, coll)
-	if(other.tag == "Spike" and wall.destroyable) then
+	if(other.tag == "Spike" and wall.destroyable and other.age >= spikeDelay) then
 		wall:reset()
 	end
 end
