@@ -13,5 +13,9 @@ function loadImgs(root)
 	hedgeTexture = love.graphics.newImage(root .. "hedge.png")
 	background = love.graphics.newImage(root .. "background.png")
 	
+	titleImg = love.graphics.newImage(root .. "title.png")
+	mainMenuImg = love.graphics.newImage(root .. "mainMenu.png")
+	winImg = love.graphics.newImage(root .. "win.png")
+	
 	src1 = love.audio.newSource("assets/track6.mp3", "static")
 end

@@ -31,63 +31,84 @@ function love.load()
 	src1:setLooping(true)
 	--src1:play()
 	cam = gamera.new(0,0,77*worldWidth,77*worldHeight)
+	gameState = "title" --"title", "mainMenu", "game", or "win"
+	menuTimer = newTimer()
+	titleDelay = 1
 end
 
 function love.keypressed(k)
 	if k == 'escape' then
 		love.event.quit()
 	end
+	if tonumber(k) and gameState == "mainMenu" then
+	
+	elseif gameState == "mainMenu" then
+		gameState = "game"
+	end
 end
 
 function love.update(dt)
-	player1:update(dt)
-	player2:update(dt)
-	world:update(dt)
-	constrainToScreen()
-	for k, v in ipairs(objects) do
-		v:update(dt)
-	end
-	for k, v in ipairs(walls) do 
-		v:update(dt)
-	end
-	if respawn then
-		if respawnTimer <= 0 then
-			for k = #objects, 1, -1 do
-				objects[k].fixture:destroy()
-				table.remove(objects, k)
-			end
-			player1.body:setLinearVelocity(0, 0)
-			player1.body:setPosition(player1.spawn.x, player1.spawn.y)
-			player1.flashTimer.time = 0
-			player2.body:setLinearVelocity(0, 0)
-			player2.body:setPosition(player2.spawn.x, player2.spawn.y)
-			player2.flashTimer.time = 0
-			respawn = false
-			player1.respawn = false
-			player2.respawn = false
+	menuTimer:update(dt)
+	if gameState == "game" then
+		player1:update(dt)
+		player2:update(dt)
+		world:update(dt)
+		constrainToScreen()
+		for k, v in ipairs(objects) do
+			v:update(dt)
 		end
-		respawnTimer = respawnTimer - 1
+		for k, v in ipairs(walls) do 
+			v:update(dt)
+		end
+		if respawn then
+			if respawnTimer <= 0 then
+				for k = #objects, 1, -1 do
+					objects[k].fixture:destroy()
+					table.remove(objects, k)
+				end
+				player1.body:setLinearVelocity(0, 0)
+				player1.body:setPosition(player1.spawn.x, player1.spawn.y)
+				player1.flashTimer.time = 0
+				player2.body:setLinearVelocity(0, 0)
+				player2.body:setPosition(player2.spawn.x, player2.spawn.y)
+				player2.flashTimer.time = 0
+				respawn = false
+				player1.respawn = false
+				player2.respawn = false
+			end
+			respawnTimer = respawnTimer - 1
+		end
+		updateAcres(dt)
+		if hasWon then gameState = "win" end
 	end
-	updateAcres(dt)
 end
 
 function love.draw()
-	if not hasWon then
-	cam:draw(function(l,t,w,h)
-		--love.graphics.setColor(1, 0, 0);
-		love.graphics.draw(background, 0, 0, 0, 2)
-		for k, v in pairs(buttons) do 
-			v:draw()
-		end
-		for k, v in ipairs(objects) do
-			v:draw()
-		end
-		
-		for k, v in ipairs(walls) do
-			v:draw()
-		end
-		player1:draw()
-		player2:draw()
-	end)
+	if gameState == "title" then
+		love.graphics.setColor(1,1,1,math.tanh((4*menuTimer.time)/titleDelay))
+		love.graphics.draw(titleImg, 0, 0)
+		if menuTimer.time>=titleDelay then gameState = "mainMenu" end
+	elseif gameState == "mainMenu" then
+		love.graphics.setColor(1,1,1,1)
+		love.graphics.draw(mainMenuImg, 0, 0)
+	elseif gameState == "game" then
+		cam:draw(function(l,t,w,h)
+			--love.graphics.setColor(1, 0, 0);
+			love.graphics.draw(background, 0, 0, 0, 2)
+			for k, v in pairs(buttons) do 
+				v:draw()
+			end
+			for k, v in ipairs(objects) do
+				v:draw()
+			end
+			
+			for k, v in ipairs(walls) do
+				v:draw()
+			end
+			player1:draw()
+			player2:draw()
+		end)
+	elseif gameState == "win" then
+		love.graphics.draw(winImg, 0, 0)
 	end
 end
