@@ -137,6 +137,7 @@ function love.draw()
 			love.graphics.setColor(1, 1, 1)
 		end
 	elseif gameState == "win" then
+		currentTrack:stop()
 		kongrad:play()
 		love.graphics.draw(winImg, 0, 0)
 	end
