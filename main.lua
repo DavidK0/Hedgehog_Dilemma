@@ -34,6 +34,7 @@ function love.load()
 	gameState = "title" --"title", "mainMenu", "game", or "win"
 	menuTimer = newTimer()
 	titleDelay = 1
+	killedByDoor = false
 end
 
 function love.keypressed(k)
@@ -77,6 +78,16 @@ function love.update(dt)
 				player2.respawn = false
 			end
 			respawnTimer = respawnTimer - 1
+			player1.body:setLinearVelocity(0, 0)
+			player1.body:setPosition(player1.spawn.x, player1.spawn.y)
+			player1.flashTimer.time = 0
+			player2.body:setLinearVelocity(0, 0)
+			player2.body:setPosition(player2.spawn.x, player2.spawn.y)
+			player2.flashTimer.time = 0
+			respawn = false
+			player1.respawn = false
+			player2.respawn = false
+			killedByDoor = false
 		end
 		updateAcres(dt)
 		if hasWon then gameState = "win" end
@@ -108,6 +119,18 @@ function love.draw()
 			player1:draw()
 			player2:draw()
 		end)
+		if respawn then
+			if killedByDoor then
+				love.graphics.setColor(0, 0, 0)
+				--print(width * (1 - (spikeDeathRespawnDelay - respawnTimer)/spikeDeathRespawnDelay))
+				love.graphics.rectangle("fill", width * (1 - 4*(spikeDeathRespawnDelay - respawnTimer)/spikeDeathRespawnDelay), 0, width*4, height)
+				love.graphics.setColor(1, 1, 1)				
+				love.graphics.print("You got crushed", width * (1 - (spikeDeathRespawnDelay - respawnTimer)/spikeDeathRespawnDelay), height/2, 0.0, 2.0) 
+			end
+			love.graphics.setColor(1, 0, 0)
+		else
+			love.graphics.setColor(1, 1, 1)
+		end
 	elseif gameState == "win" then
 		love.graphics.draw(winImg, 0, 0)
 	end
