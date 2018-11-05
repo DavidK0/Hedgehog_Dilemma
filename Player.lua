@@ -15,8 +15,6 @@ function Player(world, x, y, c, p)
 		draw = drawPlayer,
 		controls = c,
 		texture = hedgeTexture,
-		prickleTime = 120,
-		prickleTimer = 0,
 		flashBPM = 120.0/4,
 		currColor = 0.0,
 		turning = 80000,
@@ -35,7 +33,6 @@ function Player(world, x, y, c, p)
 	player.body:setLinearDamping(10.0)
 	player.body:setFixedRotation(false)
 	player.fixture:setUserData(player)
-	player.flashDelay = player.flashBPM / 60.0
 	player.flashTimer = newTimer()
 	player.body:setMass(1.5)
 	player.body:setAngularDamping(15.0)
@@ -153,15 +150,15 @@ function playerUpdate(player, dt)
 			player.body:applyTorque(10000)
 		end]]
 		
-		if player.flashTimer:everySec(player.prickleTime) then
+		if player.flashTimer:everySec(player.prickleTime) and player.flashTimer.time > 0 then
 			concatTable(objects, createSpikes(player))
 		end
 		player.flashTimer:update(dt)
-		player.currColor = (math.cos(player.flashTimer.time%player.flashDelay) + 1)/2
+		--player.currColor = (math.cos(player.flashTimer.time%player.flashDelay) + 1)/2
 	else
 		local x, y = player.body:getPosition()
 		player.body:setPosition(x + (player.spawn.x-x)/20, y+(player.spawn.y-y)/20)
-		player.flashTimer.time = 0
+		
 	end
 end
 
