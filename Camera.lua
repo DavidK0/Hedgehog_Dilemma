@@ -56,14 +56,14 @@ function loadMap(file)
 				table.insert(walls ,  Door(world, x*wallThickness + wallThickness/2, y*wallThickness + wallThickness/2, wallThickness, wallThickness, wallThickness * (2), 1, c, (d=="!" or d=="^"), mode))
 			elseif c == "1" then
 				player1.spawn = {}
-				player1.spawn.x = x*wallThickness
-				player1.spawn.y = y*wallThickness
+				player1.spawn.x = x*wallThickness + wallThickness/2
+				player1.spawn.y = y*wallThickness + wallThickness/2
 				player1.body:setPosition(player1.spawn.x, player1.spawn.y)
 			elseif c == "2" then
 				
 				player2.spawn = {}
-				player2.spawn.x = x*wallThickness
-				player2.spawn.y = y*wallThickness
+				player2.spawn.x = x*wallThickness + wallThickness/2
+				player2.spawn.y = y*wallThickness + wallThickness/2
 				player2.body:setPosition(player2.spawn.x, player2.spawn.y)
 			elseif string.match(c, '[a-z]')then
 				if(not(toggle)) then
