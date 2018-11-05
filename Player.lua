@@ -22,7 +22,8 @@ function Player(world, x, y, c, p)
 		tag = "Player",
 		respawn = false,
 		deathPointX = 0,
-		deathPointY = 0
+		deathPointY = 0,
+		doorCollision = nil
 	}
 	
 	player.width = player.texture:getWidth()/hedgehogScale
@@ -70,12 +71,14 @@ function playerPreSolve(player, other, coll)
 		if(other.axis == 0) then 
 			if(math.abs(py-wy) < 20.0 and math.abs(wx - other.minx) < 20.0) then
 				player.respawn = true
-				startRespawn(player)
+				killedByDoor = true
+				startRespawn(player, spikeDeathRespawnDelay)
 			end
 		else
 			if(math.abs(px-wx) < 20.0 and math.abs(wy - other.minx) < 20.0) then
 				player.respawn = true
-				startRespawn(player)
+				killedByDoor = true
+				startRespawn(player, spikeDeathRespawnDelay)
 			end
 		end
 	end

@@ -31,6 +31,7 @@ function love.load()
 	src1:setLooping(true)
 	--src1:play()
 	cam = gamera.new(0,0,77*worldWidth,77*worldHeight)
+	killedByDoor = false
 end
 
 function love.keypressed(k)
@@ -65,6 +66,7 @@ function love.update(dt)
 			respawn = false
 			player1.respawn = false
 			player2.respawn = false
+			killedByDoor = false
 		end
 		respawnTimer = respawnTimer - 1
 	end
@@ -73,21 +75,36 @@ end
 
 function love.draw()
 	if not hasWon then
-	cam:draw(function(l,t,w,h)
-		--love.graphics.setColor(1, 0, 0);
-		love.graphics.draw(background, 0, 0, 0, 2)
-		for k, v in pairs(buttons) do 
-			v:draw()
+		cam:draw(function(l,t,w,h)
+			--love.graphics.setColor(1, 0, 0);
+			
+			love.graphics.draw(background, 0, 0, 0, 2)
+			for k, v in pairs(buttons) do 
+				v:draw()
+			end
+			for k, v in ipairs(objects) do
+				v:draw()
+			end
+			
+			for k, v in ipairs(walls) do
+				v:draw()
+			end
+			player1:draw()
+			player2:draw()
+			
+			
+		end)
+		if respawn then
+			if killedByDoor then
+				love.graphics.setColor(0, 0, 0)
+				--print(width * (1 - (spikeDeathRespawnDelay - respawnTimer)/spikeDeathRespawnDelay))
+				love.graphics.rectangle("fill", width * (1 - 4*(spikeDeathRespawnDelay - respawnTimer)/spikeDeathRespawnDelay), 0, width*4, height)
+				love.graphics.setColor(1, 1, 1)				
+				love.graphics.print("You got crushed", width * (1 - (spikeDeathRespawnDelay - respawnTimer)/spikeDeathRespawnDelay), height/2, 0.0, 2.0) 
+			end
+			love.graphics.setColor(1, 0, 0)
+		else
+			love.graphics.setColor(1, 1, 1)
 		end
-		for k, v in ipairs(objects) do
-			v:draw()
-		end
-		
-		for k, v in ipairs(walls) do
-			v:draw()
-		end
-		player1:draw()
-		player2:draw()
-	end)
 	end
 end
