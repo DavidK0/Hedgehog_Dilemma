@@ -92,7 +92,10 @@ function love.update(dt)
 			
 		end
 		updateAcres(dt)
-		if hasWon then gameState = "win" end
+		if hasWon then
+			gameState = "win"
+			kongrad:play()
+		end
 	end
 end
 
@@ -142,7 +145,6 @@ function love.draw()
 		end
 	elseif gameState == "win" then
 		currentTrack:stop()
-		kongrad:play()
 		love.graphics.draw(winImg, 0, 0)
 	end
 end
