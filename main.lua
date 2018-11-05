@@ -31,7 +31,7 @@ function love.load()
 	src1:setLooping(true)
 	--src1:play()
 	cam = gamera.new(0,0,77*worldWidth,77*worldHeight)
-	gameState = "title" --"title", "mainMenu", "game", or "win"
+	gameState = "game" --"title", "mainMenu", "game", or "win"
 	menuTimer = newTimer()
 	titleDelay = 1
 	killedByDoor = false
@@ -105,7 +105,12 @@ function love.draw()
 	elseif gameState == "game" then
 		cam:draw(function(l,t,w,h)
 			--love.graphics.setColor(1, 0, 0);
-			love.graphics.draw(background, 0, 0, 0, 2)
+			for x = 1, 10000, background:getWidth() do
+				for y = 1, 10000, background:getHeight() do
+					love.graphics.draw(background, x, y, 0, 2)
+				end
+			end
+			
 			for k, v in pairs(buttons) do 
 				v:draw()
 			end
@@ -132,6 +137,7 @@ function love.draw()
 			love.graphics.setColor(1, 1, 1)
 		end
 	elseif gameState == "win" then
+		kongrad:play()
 		love.graphics.draw(winImg, 0, 0)
 	end
 end

@@ -18,4 +18,5 @@ function loadImgs(root)
 	winImg = love.graphics.newImage(root .. "win.png")
 	
 	src1 = love.audio.newSource("assets/track6.mp3", "static")
+	kongrad = love.audio.newSource("assets/ending kongrad.mp3", "static")
 end
