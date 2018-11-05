@@ -28,10 +28,10 @@ function love.load()
 	buttons = {}
 	wallThickness = 600.0/14
 	worldWidth, worldHeight = loadMap("/assets/map.txt")
-	src1:setLooping(true)
-	--src1:play()
+	--currentTrack:setLooping(true)
+	--currentTrack:play()
 	cam = gamera.new(0,0,77*worldWidth,77*worldHeight)
-	gameState = "game" --"title", "mainMenu", "game", or "win"
+	gameState = "title" --"title", "mainMenu", "game", or "win"
 	menuTimer = newTimer()
 	titleDelay = 1
 	killedByDoor = false
@@ -50,7 +50,10 @@ end
 
 function love.update(dt)
 	menuTimer:update(dt)
-	if gameState == "game" then
+	if gameState == "mainMenu" then
+		playRandomTrack()
+	elseif gameState == "game" then
+		playRandomTrack()
 		player1:update(dt)
 		player2:update(dt)
 		world:update(dt)
