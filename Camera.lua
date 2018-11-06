@@ -25,7 +25,7 @@ end
 function updateAcres(dt)
 	local x1, y1 = player1.body:getPosition()
 	local x2, y2 = player2.body:getPosition()
-	if not player1.respawn then
+	if not respawn then
 		cam:setWorld(0,0,77*worldWidth,77*worldHeight)
 		cam:setPosition((x1 + x2)/2, (y1 + y2)/2)
 	else

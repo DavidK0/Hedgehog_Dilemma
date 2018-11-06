@@ -4,7 +4,7 @@ loadSpikes()
 
 hedgehogScale =2.1
 
-function Player(world, x, y, c, p)
+function Player(world, x, y, c, p, f)
 	local player = {
 		height = 50,
 		width = 25,
@@ -24,7 +24,8 @@ function Player(world, x, y, c, p)
 		deathPointX = 0,
 		deathPointY = 0,
 		doorCollision = nil,
-		won = false
+		won = false,
+		fireSpikes = f
 	}
 	
 	player.width = player.texture:getWidth()/hedgehogScale
@@ -165,7 +166,9 @@ function playerUpdate(player, dt)
 		end]]
 		
 		if player.flashTimer:everySec(player.prickleTime) and player.flashTimer.time > 0 then
-			concatTable(objects, createSpikes(player))
+			if(player.fireSpikes) then
+				concatTable(objects, createSpikes(player))
+			end
 		end
 		player.flashTimer:update(dt)
 		--player.currColor = (math.cos(player.flashTimer.time%player.flashDelay) + 1)/2
