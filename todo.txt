@@ -8,3 +8,5 @@ randomize wall texture: done
 randomize spike texture: in progress
 make player hitbox elliptical: in progress
 change death door text
+Add checkpoints
+Make glass respawn
