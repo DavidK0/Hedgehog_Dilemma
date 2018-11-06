@@ -99,6 +99,13 @@ function love.update(dt)
 			gameState = "win"
 			kongrad:play()
 		end
+	elseif gameState == "win" then
+		if not kongrad:isPlaying() then
+			love.event.quit()
+		end
+	end
+	if(player1.won and player2.won) then
+		hasWon = true
 	end
 end
 
