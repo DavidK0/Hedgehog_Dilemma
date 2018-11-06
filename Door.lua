@@ -18,7 +18,8 @@ function Door(world, x, y, width, height, movement, axis, button, toggle, mode)
 		mode = mode,
 		toggle = toggle,
 		goal = x,
-		tag = "Door"
+		tag = "Door",
+		reset = doorReset
 	}
 	if axis == 1 then
 		door.minx = y
@@ -31,7 +32,9 @@ function Door(world, x, y, width, height, movement, axis, button, toggle, mode)
 	return door
 end
 
-
+function doorReset(door)
+	door.state = 0
+end
 
 function doorUpdate(door, dt)
 	

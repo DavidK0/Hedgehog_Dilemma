@@ -23,7 +23,8 @@ function Player(world, x, y, c, p)
 		respawn = false,
 		deathPointX = 0,
 		deathPointY = 0,
-		doorCollision = nil
+		doorCollision = nil,
+		won = false
 	}
 	
 	player.width = player.texture:getWidth()/hedgehogScale

@@ -3,7 +3,6 @@ function PushableWall(world, x, y, width, height, destroyable)
 		body = love.physics.newBody(world, x, y, "dynamic"),
 		shape = love.physics.newRectangleShape(width*0.95, height*0.95),
 		draw = drawpushableWall,
-		texture = wallImg,
 		update = pushableWallUpdate,
 		reset = pushableWallReset,
 		toReset = false,
@@ -17,6 +16,11 @@ function PushableWall(world, x, y, width, height, destroyable)
 	pushableWall.body:setLinearDamping(10.0)
 	pushableWall.beginCollision = pushableWallBeginCollision
 	pushableWall.endCollision = pushableWallEndCollision
+	if(pushableWall.destroyable) then
+		pushableWall.texture = pushableWallDestroyImage
+	else
+		pushableWall.texture = pushableWallNoDestroyImage
+	end
 	return pushableWall
 end
 
@@ -39,7 +43,6 @@ function pushableWallUpdate(pushableWall, dt)
 end
 
 function pushableWallReset(pushableWall) 
-	
 	pushableWall.toReset = true
 end
 

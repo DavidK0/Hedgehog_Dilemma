@@ -11,7 +11,8 @@ function Button(world, x, y, width, height, doors)
 		beginCollision = buttonBeginCollision,
 		endCollision = buttonEndCollision,
 		texture = buttonImg,
-		tag = "Button"
+		tag = "Button",
+		reset = resetButton
 	}
 	button.fixture = love.physics.newFixture(button.body, button.shape)
 	button.fixture:setUserData(button)
@@ -25,6 +26,10 @@ function BlockButton(world, x, y, width, height, doors)
 	blockButton.beginCollision = blockButtonBeginCollision
 	blockButton.endCollision = blockButtonEndCollision
 	return blockButton
+end
+
+function resetButton(button)
+	button.active = 0
 end
 
 function buttonBeginCollision(button, other, coll)
@@ -52,6 +57,9 @@ function blockButtonEndCollision(button, other, coll)
 end
 
 function drawbutton(button)
+	if(button.active < 0) then
+		button.active = 0
+	end
 	love.graphics.setColor(1.0, 1.0, 1.0)
 	--love.graphics.polygon("fill", button.body:getWorldPoints(button.shape:getPoints()))
 	local x, y = button.body:getPosition()
