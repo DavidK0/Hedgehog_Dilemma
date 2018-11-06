@@ -28,6 +28,9 @@ function loadImgs(root)
 	mainMenuImg = love.graphics.newImage(root .. "mainMenu.png")
 	winImg = love.graphics.newImage(root .. "win.png")
 	controlsImg = love.graphics.newImage(root .. "controls.png")
+	pushableWallNoDestroyImage = love.graphics.newImage(root .. "movebox.jpg")
+	pushableWallDestroyImage = love.graphics.newImage(root .. "glass.png")
+	
 	
 	src1 = love.audio.newSource("assets/track6.mp3", "static")
 	kongrad = love.audio.newSource("assets/ending kongrad.mp3", "static")
