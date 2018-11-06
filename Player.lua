@@ -156,7 +156,7 @@ function playerUpdate(player, dt)
 		end]]
 		
 		if player.flashTimer:everySec(player.prickleTime) and player.flashTimer.time > 0 then
-			concatTable(objects, createSpikes(player))
+			--concatTable(objects, createSpikes(player))
 		end
 		player.flashTimer:update(dt)
 		--player.currColor = (math.cos(player.flashTimer.time%player.flashDelay) + 1)/2
