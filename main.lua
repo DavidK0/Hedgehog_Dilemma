@@ -15,7 +15,7 @@ function love.load()
 	loadImgs("/assets/")
 	respawn = false
 	hasWon = false
-	spikeDeathRespawnDelay = 49
+	spikeDeathRespawnDelay = 50
 	respawnTimer = 0
 	width = love.graphics.getWidth() --Screen width
 	height = love.graphics.getHeight() --Screen height
