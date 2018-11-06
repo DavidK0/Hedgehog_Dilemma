@@ -15,7 +15,7 @@ function love.load()
 	loadImgs("/assets/")
 	respawn = false
 	hasWon = false
-	spikeDeathRespawnDelay = 80
+	spikeDeathRespawnDelay = 50
 	respawnTimer = 0
 	width = love.graphics.getWidth() --Screen width
 	height = love.graphics.getHeight() --Screen height
@@ -77,9 +77,11 @@ function love.update(dt)
 					end
 				end
 				player1.body:setLinearVelocity(0, 0)
+				player1.body:setAngle(math.pi)
 				player1.body:setPosition(player1.spawn.x, player1.spawn.y)
 				player1.flashTimer.time = 0
 				player2.body:setLinearVelocity(0, 0)
+				player2.body:setAngle(math.pi)
 				player2.body:setPosition(player2.spawn.x, player2.spawn.y)
 				player2.flashTimer.time = 0
 				respawn = false

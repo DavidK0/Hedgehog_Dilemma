@@ -38,6 +38,9 @@ function Player(world, x, y, c, p)
 	player.flashTimer = newTimer()
 	player.body:setMass(1.5)
 	player.body:setAngularDamping(15.0)
+	
+	player.body:setAngle(math.pi)
+	
 	player.beginCollision = playerBeginCollision
 	player.endCollision = playerEndCollision
 	player.preSolve = playerPreSolve
