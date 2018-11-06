@@ -3,8 +3,8 @@ In order of priority
 
 finish making levels
 make decent menu graphics
-make controls option on main menu
 touching spikes decreases global score
-make player hitbox elliptical
 randomize wall texture
 randomize spike texture
+make player hitbox elliptical
+change death door text
