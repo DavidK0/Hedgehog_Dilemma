@@ -33,7 +33,7 @@ function love.load()
 	menuTimer = newTimer()
 	titleDelay = 1
 	killedByDoor = false
-	camShake = 50
+	camShake = 0
 end
 
 function love.keypressed(k)

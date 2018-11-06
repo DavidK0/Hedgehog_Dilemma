@@ -29,6 +29,7 @@ function updateAcres(dt)
 		cam:setWorld(0,0,77*worldWidth,77*worldHeight)
 		cam:setPosition((x1 + x2)/2, (y1 + y2)/2)
 	else
+		camShake = camShake + dt*8
 		local xShake = (math.random()*camShake-camShake/2)
 		local yShake = (math.random()*camShake-camShake/2)
 		local x = (x1 + x2)/2
