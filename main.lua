@@ -10,7 +10,7 @@ require "WinTrigger"
 require "GlassWall"
 require "Physics"
 gamera = require "Gamera"
-
+--comment
 function love.load()
 	loadImgs("/assets/")
 	respawn = false
