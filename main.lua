@@ -124,7 +124,7 @@ function love.draw()
 			--love.graphics.setColor(1, 0, 0);
 			for x = 1, 10000, background:getWidth() do
 				for y = 1, 10000, background:getHeight() do
-					love.graphics.draw(background, x, y, 0, 2)
+					love.graphics.draw(background, x, y, 0, 1)
 				end
 			end
 			
