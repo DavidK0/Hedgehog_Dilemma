@@ -96,10 +96,20 @@ end
 
 function drawdoor(door)
 	local x,y = door.body:getPosition()
+	love.graphics.setColor(1.0, 1.0, 1.0)
 	if(door.axis == 0) then
 		love.graphics.draw(door.texture2, x - wallThickness/2, y - wallThickness/4, 0.0, wallThickness/door.texture2:getWidth() , wallThickness/door.texture2:getHeight()/2)
 	else
 		love.graphics.draw(door.texture, x - wallThickness/4, y - wallThickness/2, 0.0, wallThickness/door.texture:getWidth()/2 , wallThickness/door.texture:getHeight())		
 	end
+	--[[for k, button in ipairs(door.buttons) do
+		if(button.active > 0) then
+			love.graphics.setColor(0.0, 1.0, 0.0)
+		else
+			love.graphics.setColor(0.1, 0.1, 0.1)
+		end
+		local bx, by = button.body:getPosition()
+		love.graphics.line(x, y, x, by, bx, by)
+	end]]
 end
 
