@@ -16,8 +16,13 @@ function loadImgs(root)
 	for i = 1, 10 do
 		table.insert(tracks, love.audio.newSource("assets/music/track"..i..".mp3", "static"))
 	end
+	
+	wallImgs = {}
+	for i = 1, 2 do
+		table.insert(wallImgs, love.graphics.newImage("assets/walls/wall"..i..".png"))
+	end
+	
 	currentTrack = tracks[math.random(10)]
-	wallImg = love.graphics.newImage(root .. "tiles.png")
 	doorImg = love.graphics.newImage(root .. "door.png")
 	doorImg2 = love.graphics.newImage(root .. "door2.png")
 	buttonImg = love.graphics.newImage(root .. "button.png")
