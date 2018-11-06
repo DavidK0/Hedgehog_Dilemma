@@ -18,7 +18,7 @@ function loadImgs(root)
 	end
 	
 	wallImgs = {}
-	for i = 1, 2 do
+	for i = 1, 4 do
 		table.insert(wallImgs, love.graphics.newImage("assets/walls/wall"..i..".png"))
 	end
 	
