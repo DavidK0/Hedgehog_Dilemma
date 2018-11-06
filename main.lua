@@ -21,8 +21,9 @@ function love.load()
 	height = love.graphics.getHeight() --Screen height
 	world = love.physics.newWorld(0, 0, true) -- meter defaults to 30
 	world:setCallbacks(beginContact, endContact, preSolve, postSolve)
-	player1 = Player(world, width/2, height/2, {up = "w", down = "s", left = "a", right = "d"}, 4.0)
-	player2 = Player(world, width/2 + 50, height/2, {up = "up", down = "down", left  = "left", right = "right"}, 3.0)
+	player1 = Player(world, width/2, height/2, {up = "w", down = "s", left = "a", right = "d"}, 4.0, false)
+	print(player1.fireSpikes)
+	player2 = Player(world, width/2 + 50, height/2, {up = "up", down = "down", left  = "left", right = "right"}, 3.0, true)
 	objects = {}
 	wallThickness = 600.0/14
 	worldWidth, worldHeight = loadMap("/assets/map.txt")
