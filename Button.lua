@@ -10,7 +10,8 @@ function Button(world, x, y, width, height, doors)
 		active = 0,
 		beginCollision = buttonBeginCollision,
 		endCollision = buttonEndCollision,
-		texture = buttonImg,
+		textureUp = buttonUpImg,
+		textureDown = buttonDownImg,
 		tag = "Button",
 		reset = resetButton
 	}
@@ -63,7 +64,13 @@ function drawbutton(button)
 	love.graphics.setColor(1.0, 1.0, 1.0)
 	--love.graphics.polygon("fill", button.body:getWorldPoints(button.shape:getPoints()))
 	local x, y = button.body:getPosition()
-	love.graphics.draw(button.texture, x - wallThickness/2, y - wallThickness/2, 0.0,0.5, 0.5)
+	
+	if (button.active > 0) then
+		love.graphics.draw(button.textureDown, x - wallThickness/2, y - wallThickness/2, 0.0,0.5, 0.5)
+	end
+	if (button.active < 1) then
+		love.graphics.draw(button.textureUp, x - wallThickness/2, y - wallThickness/2, 0.0,0.5, 0.5)
+	end
 	--love.graphics.rectangle("fill", x - button.width/2, y - button.height/2, button.width, button.height)
 		
 end
