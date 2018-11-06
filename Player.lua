@@ -31,7 +31,12 @@ function Player(world, x, y, c, p, f)
 	player.width = player.texture:getWidth()/hedgehogScale
 	player.height = player.texture:getHeight()/hedgehogScale
 	
-	player.shape = love.physics.newPolygonShape(-player.width/2, 0, 0, player.height/2, player.width/2, 0, 0, -player.height/2)
+	player.shape = love.physics.newPolygonShape(-player.width/2, 0,
+												-player.width/2*.8, player.height/2*.8,
+												0, player.height/2,
+												player.width/2*.8, player.height/2*.8,
+												player.width/2, 0,
+												0, -player.height/2)
 	player.fixture = love.physics.newFixture(player.body, player.shape)
 	player.body:setLinearDamping(10.0)
 	player.body:setFixedRotation(false)

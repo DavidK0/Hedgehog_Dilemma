@@ -3,7 +3,7 @@ function loadImgs(root)
 	root = root or "/assets/" --defaults to the "/assets" root for all images
 	
 	spikeImgs = {}
-	for i = 1, 1 do
+	for i = 1, 4 do
 		table.insert(spikeImgs, love.graphics.newImage(root .. "spikes/spike" .. i .. ".png"))
 	end
 	
