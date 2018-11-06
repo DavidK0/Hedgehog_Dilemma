@@ -4,7 +4,7 @@ loadSpikes()
 
 hedgehogScale =2.1
 
-function Player(world, x, y, c, p)
+function Player(world, x, y, c, p, f)
 	local player = {
 		height = 50,
 		width = 25,
@@ -24,17 +24,18 @@ function Player(world, x, y, c, p)
 		deathPointX = 0,
 		deathPointY = 0,
 		doorCollision = nil,
-		won = false
+		won = false,
+		fireSpikes = f
 	}
 	
 	player.width = player.texture:getWidth()/hedgehogScale
 	player.height = player.texture:getHeight()/hedgehogScale
 	
-	player.shape = love.physics.newPolygonShape(-player.width/2, 0,
+	player.shape = love.physics.newPolygonShape(-player.width/2*.9, 0,
 												-player.width/2*.8, player.height/2*.8,
 												0, player.height/2,
 												player.width/2*.8, player.height/2*.8,
-												player.width/2, 0,
+												player.width/2*.9, 0,
 												0, -player.height/2)
 	player.fixture = love.physics.newFixture(player.body, player.shape)
 	player.body:setLinearDamping(10.0)
@@ -165,7 +166,9 @@ function playerUpdate(player, dt)
 		end]]
 		
 		if player.flashTimer:everySec(player.prickleTime) and player.flashTimer.time > 0 then
-			concatTable(objects, createSpikes(player))
+			if(player.fireSpikes) then
+				concatTable(objects, createSpikes(player))
+			end
 		end
 		player.flashTimer:update(dt)
 		--player.currColor = (math.cos(player.flashTimer.time%player.flashDelay) + 1)/2

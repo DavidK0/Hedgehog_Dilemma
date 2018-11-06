@@ -3,7 +3,7 @@ function GlassWall(world, x, y, width, height)
 		body = love.physics.newBody(world, x, y),
 		shape = love.physics.newRectangleShape(width, height),
 		draw = drawWall,
-		texture = wallImg,
+		texture = glassImg,
 		update = wallUpdate,
 		tag = "GlassWall",
 		destroy = destroyGlassWall
@@ -14,9 +14,9 @@ function GlassWall(world, x, y, width, height)
 end
 
 function destroyGlassWall(glassWall)
-	for k, v in ipairs(walls) do
+	for k, v in ipairs(objects) do
 		if(v == glassWall) then
-			table.remove(walls, k)
+			table.remove(objects, k)
 		end
 	end
 	glassWall.fixture:destroy()
