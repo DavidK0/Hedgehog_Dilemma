@@ -18,14 +18,15 @@ function loadImgs(root)
 	end
 	
 	wallImgs = {}
-	for i = 1, 4 do
+	for i = 1, 5 do
 		table.insert(wallImgs, love.graphics.newImage("assets/walls/wall"..i..".png"))
 	end
 	
 	currentTrack = tracks[math.random(10)]
 	doorImg = love.graphics.newImage(root .. "door.png")
 	doorImg2 = love.graphics.newImage(root .. "door2.png")
-	buttonImg = love.graphics.newImage(root .. "button.png")
+	buttonUpImg = love.graphics.newImage(root .. "buttonUp.png")
+	buttonDownImg = love.graphics.newImage(root .. "buttonDown.png")
 	hedgeTexture = love.graphics.newImage(root .. "hedge.png")
 	background = love.graphics.newImage(root .. "background.png")
 	
