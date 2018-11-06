@@ -12,7 +12,7 @@ function loadSpikes(num) --optional number of spikes
 	spikeHeight = 16 --the collision box height
 	spikeSpeed = 2700 --the speed of a spike in ? units
 	spikeDelay = 2 --number of seconds the spikes display until they fire
-	spikeWiggle = 3 --amount the spikes wiggle; 0 for no wiggle
+	spikeWiggle = 2 --amount the spikes wiggle; 0 for no wiggle
 	spikeVariation = 0 --variation in the way spikes are spread around the ellipse
 	spikeGrowR = 10 --distance the spikes grow during spikeDelay
 end
@@ -96,7 +96,7 @@ function drawSpike(obj)
 	
 	local wigAngle = (math.random() * spikeWiggle/20)-spikeWiggle/2/20
 	if(not(respawn)) then
-		love.graphics.draw(spikeImgs[1], x, y, obj.drawAngle - math.pi/2 + wigAngle, 1, 1, 1, 1) --don't know why multiply obj.parent.body:getAngle() by two, but it works
+		love.graphics.draw(spikeImgs[math.random(4)], x, y, obj.drawAngle - math.pi/2 + wigAngle, 1, 1, 1, 1) --don't know why multiply obj.parent.body:getAngle() by two, but it works
 	end
 end
 
