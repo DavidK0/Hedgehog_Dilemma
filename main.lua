@@ -77,6 +77,9 @@ function love.update(dt)
 						v.state = 0
 					end
 				end
+				for k, v in ipairs(buttons) do
+					v.active = 0
+				end
 				player1.body:setLinearVelocity(0, 0)
 				player1.body:setPosition(player1.spawn.x, player1.spawn.y)
 				player1.flashTimer.time = 0
