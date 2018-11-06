@@ -25,6 +25,7 @@ function loadImgs(root)
 	currentTrack = tracks[math.random(10)]
 	doorImg = love.graphics.newImage(root .. "door.png")
 	doorImg2 = love.graphics.newImage(root .. "door2.png")
+	glassImg = love.graphics.newImage(root .. "glass.png")
 	buttonUpImg = love.graphics.newImage(root .. "buttonUp.png")
 	buttonDownImg = love.graphics.newImage(root .. "buttonDown.png")
 	hedgeTexture = love.graphics.newImage(root .. "hedge.png")
