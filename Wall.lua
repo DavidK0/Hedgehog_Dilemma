@@ -5,7 +5,8 @@ function Wall(world, x, y, width, height)
 		draw = drawWall,
 		texture = wallImg,
 		update = wallUpdate,
-		tag = "Wall"
+		tag = "Wall",
+		reset = wallUpdate
 	}
 	wall.fixture = love.physics.newFixture(wall.body, wall.shape)
 	wall.fixture:setUserData(wall)

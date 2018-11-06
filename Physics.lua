@@ -40,5 +40,14 @@ function preSolve(a, b, coll)
 end
  
 function postSolve(a, b, coll, normalimpulse, tangentimpulse)
- 
+	aObj = a:getUserData()
+	bObj = b:getUserData()
+	if(aObj ~= nil and bObj ~= nil) then 
+		if(aObj.postSolve ~= nil) then
+			aObj:postSolve(bObj, coll)
+		end
+		if(bObj.postSolve ~= nil) then
+			bObj:postSolve(aObj, coll)
+		end
+	end
 end

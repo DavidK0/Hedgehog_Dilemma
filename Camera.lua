@@ -49,11 +49,11 @@ function loadMap(file)
 				mode = 2
 			end
 			if c == "#" then
-				table.insert(walls, Wall(world, x*wallThickness + wallThickness/2, y*wallThickness + wallThickness/2, wallThickness, wallThickness))
+				table.insert(objects, Wall(world, x*wallThickness + wallThickness/2, y*wallThickness + wallThickness/2, wallThickness, wallThickness))
 			elseif string.match(c, "[A-M]") then
-				table.insert(walls, Door(world, x*wallThickness + wallThickness/2, y*wallThickness + wallThickness/2, wallThickness, wallThickness, wallThickness * (2), 0, c, (d=="!" or d=="^"), mode))
+				table.insert(objects, Door(world, x*wallThickness + wallThickness/2, y*wallThickness + wallThickness/2, wallThickness, wallThickness, wallThickness * (2), 0, c, (d=="!" or d=="^"), mode))
 			elseif string.match(c, "[N-Z]") then
-				table.insert(walls ,  Door(world, x*wallThickness + wallThickness/2, y*wallThickness + wallThickness/2, wallThickness, wallThickness, wallThickness * (2), 1, c, (d=="!" or d=="^"), mode))
+				table.insert(objects ,  Door(world, x*wallThickness + wallThickness/2, y*wallThickness + wallThickness/2, wallThickness, wallThickness, wallThickness * (2), 1, c, (d=="!" or d=="^"), mode))
 			elseif c == "1" then
 				player1.spawn = {}
 				player1.spawn.x = x*wallThickness + wallThickness/2
@@ -68,19 +68,19 @@ function loadMap(file)
 			elseif string.match(c, '[a-z]')then
 				if(not(toggle)) then
 					
-					table.insert(buttons, Button(world, x*wallThickness + wallThickness/2, y*wallThickness + wallThickness/2, wallThickness, wallThickness, c))
+					table.insert(objects, Button(world, x*wallThickness + wallThickness/2, y*wallThickness + wallThickness/2, wallThickness, wallThickness, c))
 				else
 					
-					table.insert(buttons, BlockButton(world, x*wallThickness + wallThickness/2, y*wallThickness + wallThickness/2, wallThickness, wallThickness, c))
+					table.insert(objects, BlockButton(world, x*wallThickness + wallThickness/2, y*wallThickness + wallThickness/2, wallThickness, wallThickness, c))
 				end
 			elseif c == "&" then
-				table.insert(walls, PushableWall(world, x*wallThickness + wallThickness/2, y*wallThickness + wallThickness/2, wallThickness, wallThickness, true))
+				table.insert(objects, PushableWall(world, x*wallThickness + wallThickness/2, y*wallThickness + wallThickness/2, wallThickness, wallThickness, true))
 			elseif c == "@" then
-				table.insert(walls, PushableWall(world, x*wallThickness + wallThickness/2, y*wallThickness + wallThickness/2, wallThickness, wallThickness, false))				
+				table.insert(objects, PushableWall(world, x*wallThickness + wallThickness/2, y*wallThickness + wallThickness/2, wallThickness, wallThickness, false))				
 			elseif c == "$" then
 				WinTrigger(world, x*wallThickness + wallThickness/2, y*wallThickness + wallThickness/2, wallThickness, wallThickness)
 			elseif c == "%" then
-				table.insert(walls, GlassWall(world, x*wallThickness + wallThickness/2, y*wallThickness + wallThickness/2, wallThickness, wallThickness))
+				table.insert(objects, GlassWall(world, x*wallThickness + wallThickness/2, y*wallThickness + wallThickness/2, wallThickness, wallThickness))
 			end
 			x = x + 1
 		end
@@ -89,14 +89,11 @@ function loadMap(file)
 		y = y + 1
 	end
 	maxY=y
-	for k, v in pairs(buttons) do
-		for kw, w in pairs(walls) do 
-			
-			if(w.tag == "Door") then
-				
+	for k, v in pairs(objects) do
+		for kw, w in pairs(objects) do 
+			if(w.tag == "Door" and v.tag == "Button") then
 				if(string.lower(w.button) == v.doors) then 
 					table.insert(w.buttons, v)
-					
 				end
 			end
 		end
