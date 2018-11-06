@@ -52,6 +52,9 @@ function blockButtonEndCollision(button, other, coll)
 end
 
 function drawbutton(button)
+	if(button.active < 0) then
+		button.active = 0
+	end
 	love.graphics.setColor(1.0, 1.0, 1.0)
 	--love.graphics.polygon("fill", button.body:getWorldPoints(button.shape:getPoints()))
 	local x, y = button.body:getPosition()
