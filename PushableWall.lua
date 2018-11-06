@@ -43,7 +43,6 @@ function pushableWallUpdate(pushableWall, dt)
 end
 
 function pushableWallReset(pushableWall) 
-	
 	pushableWall.toReset = true
 end
 

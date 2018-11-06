@@ -24,8 +24,6 @@ function love.load()
 	player1 = Player(world, width/2, height/2, {up = "w", down = "s", left = "a", right = "d"}, 4.0)
 	player2 = Player(world, width/2 + 50, height/2, {up = "up", down = "down", left  = "left", right = "right"}, 3.0)
 	objects = {}
-	walls = {}
-	buttons = {}
 	wallThickness = 600.0/14
 	worldWidth, worldHeight = loadMap("/assets/map.txt")
 	--currentTrack:setLooping(true)
@@ -61,24 +59,21 @@ function love.update(dt)
 		world:update(dt)
 		constrainToScreen()
 		for k, v in ipairs(objects) do
-			v:update(dt)
-		end
-		for k, v in ipairs(walls) do 
-			v:update(dt)
+			if(v.update ~= nil) then
+				v:update(dt)
+			end
 		end
 		if respawn then
 			if respawnTimer <= 0 then
 				for k = #objects, 1, -1 do
-					objects[k].fixture:destroy()
-					table.remove(objects, k)
-				end
-				for k, v in ipairs(walls) do
-					if(v.tag == "Door") then
-						v.state = 0
+					v = objects[k]
+					if(v.reset ~= nil) then
+						v:reset()
 					end
-				end
-				for k, v in ipairs(buttons) do
-					v.active = 0
+					if(v.tag == "Spike") then
+						v.fixture:destroy()
+						table.remove(objects, k)
+					end
 				end
 				player1.body:setLinearVelocity(0, 0)
 				player1.body:setPosition(player1.spawn.x, player1.spawn.y)
@@ -121,22 +116,15 @@ function love.draw()
 		love.graphics.draw(controlsImg, 0, 0)
 	elseif gameState == "game" then
 		cam:draw(function(l,t,w,h)
-			--love.graphics.setColor(1, 0, 0);
 			for x = 1, 10000, background:getWidth() do
 				for y = 1, 10000, background:getHeight() do
 					love.graphics.draw(background, x, y, 0, 1)
 				end
 			end
-			
-			for k, v in pairs(buttons) do 
-				v:draw()
-			end
 			for k, v in ipairs(objects) do
-				v:draw()
-			end
-			
-			for k, v in ipairs(walls) do
-				v:draw()
+				if(v.draw ~= nil) then
+					v:draw()
+				end
 			end
 			player1:draw()
 			player2:draw()

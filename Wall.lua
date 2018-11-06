@@ -3,9 +3,10 @@ function Wall(world, x, y, width, height)
 		body = love.physics.newBody(world, x, y),
 		shape = love.physics.newRectangleShape(width*0.95, height*0.95),
 		draw = drawWall,
-		texture = wallImg,
+		texture = wallImgs[math.random(2)],
 		update = wallUpdate,
-		tag = "Wall"
+		tag = "Wall",
+		reset = wallUpdate
 	}
 	wall.fixture = love.physics.newFixture(wall.body, wall.shape)
 	wall.fixture:setUserData(wall)
