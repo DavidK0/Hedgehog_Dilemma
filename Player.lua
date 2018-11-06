@@ -53,11 +53,13 @@ function playerBeginCollision(player, other, coll)
 end
 
 function startRespawn(player, delay)
-	respawn = true
-	respawnTimer = delay or 0
-	local x, y = player.body:getPosition()
-	player.deathPointX = x
-	player.deathPointY = y
+	if(not(respawn)) then
+		respawn = true
+		respawnTimer = delay or 0
+		local x, y = player.body:getPosition()
+		player.deathPointX = x
+		player.deathPointY = y
+	end
 end
 
 function playerEndCollision(player, other, coll) 
