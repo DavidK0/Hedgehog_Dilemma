@@ -67,10 +67,8 @@ function loadMap(file)
 				player2.body:setPosition(player2.spawn.x, player2.spawn.y)
 			elseif string.match(c, '[a-z]')then
 				if(not(toggle)) then
-					
 					table.insert(objects, Button(world, x*wallThickness + wallThickness/2, y*wallThickness + wallThickness/2, wallThickness, wallThickness, c))
 				else
-					
 					table.insert(objects, BlockButton(world, x*wallThickness + wallThickness/2, y*wallThickness + wallThickness/2, wallThickness, wallThickness, c))
 				end
 			elseif c == "&" then
