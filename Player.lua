@@ -42,7 +42,7 @@ function Player(world, x, y, c, p)
 	player.fixture:setUserData(player)
 	player.flashTimer = newTimer()
 	player.body:setMass(1.5)
-	player.body:setAngularDamping(15.0)
+	player.body:setAngularDamping(30.0)
 	
 	player.body:setAngle(math.pi)
 	
