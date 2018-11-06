@@ -30,7 +30,7 @@ function Player(world, x, y, c, p)
 	player.width = player.texture:getWidth()/hedgehogScale
 	player.height = player.texture:getHeight()/hedgehogScale
 	
-	player.shape = love.physics.newRectangleShape(player.width, player.height)
+	player.shape = love.physics.newPolygonShape(-player.width/2, 0, 0, player.height/2, player.width/2, 0, 0, -player.height/2)
 	player.fixture = love.physics.newFixture(player.body, player.shape)
 	player.body:setLinearDamping(10.0)
 	player.body:setFixedRotation(false)
@@ -174,14 +174,18 @@ end
 function drawPlayer(player)
 	local x, y = player.body:getPosition()
 	--love.graphics.setColor(1.0, player.currColor, player.currColor)
-	local x, y = player.body:getWorldPoints(player.shape:getPoints())
+	--local x, y = player.body:getWorldPoints(player.shape:getPoints())
 	if player.respawn then
 		love.graphics.setColor(1,.5,.5,1)
 	else
 		love.graphics.setColor(1,1,1,1)
 	end
 	if not(player.respawn) then
-		love.graphics.draw(player.texture, x, y, player.body:getAngle(), player.texture:getWidth()/57/hedgehogScale,player.texture:getHeight()/97/hedgehogScale)
+		local hedgeHogPixelWidth = 57/hedgehogScale
+		local hedgeHogPixelHeight = 97/hedgehogScale
+		local angle = player.body:getAngle()
+		love.graphics.draw(player.texture, x, y, angle, hedgeHogPixelWidth/player.texture:getWidth(), hedgeHogPixelHeight/player.texture:getHeight(), hedgeHogPixelWidth, hedgeHogPixelHeight)
+		love.graphics.polygon("line", player.body:getWorldPoints(player.shape:getPoints()))
 	else	
 		love.graphics.setColor(1,0,0)
 		for i=0,2*math.pi,0.1 do
