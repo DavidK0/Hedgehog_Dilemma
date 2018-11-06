@@ -25,7 +25,17 @@ end
 function updateAcres(dt)
 	local x1, y1 = player1.body:getPosition()
 	local x2, y2 = player2.body:getPosition()
-	cam:setPosition((x1 + x2)/2, (y1 + y2)/2)
+	if not player1.respawn then
+		cam:setWorld(0,0,77*worldWidth,77*worldHeight)
+		cam:setPosition((x1 + x2)/2, (y1 + y2)/2)
+	else
+		local xShake = (math.random()*camShake-camShake/2)
+		local yShake = (math.random()*camShake-camShake/2)
+		local x = (x1 + x2)/2
+		local y = (y1 + y2)/2
+		cam:setWorld(0-xShake,0-yShake,77*worldWidth+xShake,77*worldHeight-yShake)
+		cam:setPosition(x+xShake,y+yShake)
+	end
 end
 
 function loadMap(file)
