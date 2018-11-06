@@ -95,7 +95,9 @@ function drawSpike(obj)
 	local ori = obj.body:getAngle()
 	
 	local wigAngle = (math.random() * spikeWiggle/20)-spikeWiggle/2/20
-	love.graphics.draw(spikeImgs[1], x, y, obj.drawAngle - math.pi/2 + wigAngle, 1, 1, 1, 1) --don't know why multiply obj.parent.body:getAngle() by two, but it works
+	if(not(respawn)) then
+		love.graphics.draw(spikeImgs[1], x, y, obj.drawAngle - math.pi/2 + wigAngle, 1, 1, 1, 1) --don't know why multiply obj.parent.body:getAngle() by two, but it works
+	end
 end
 
 --calculate where the spike should be when connected to hedge
