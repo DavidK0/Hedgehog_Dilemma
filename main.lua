@@ -135,10 +135,12 @@ function love.draw()
 		if respawn then
 			if killedByDoor then
 				love.graphics.setColor(0, 0, 0)
-				--print(width * (1 - (spikeDeathRespawnDelay - respawnTimer)/spikeDeathRespawnDelay))
-				love.graphics.rectangle("fill", width * (1 - 4*(spikeDeathRespawnDelay - respawnTimer)/spikeDeathRespawnDelay), 0, width*4, height)
-				love.graphics.setColor(1, 1, 1)				
-				love.graphics.print("You got crushed", width * (1 - (spikeDeathRespawnDelay - respawnTimer)/spikeDeathRespawnDelay), height/2, 0.0, 2.0) 
+				local doorAnimationX = math.max(-((spikeDeathRespawnDelay - respawnTimer)/spikeDeathRespawnDelay)+.5,0)
+				--print(doorAnimationX)
+				love.graphics.rectangle("fill", width * doorAnimationX, 0, width*4, height)
+				love.graphics.setColor(1, 1, 1)		
+				love.graphics.setFont(doorDeathFont)
+				love.graphics.print("You got crushed", width * doorAnimationX + width/2 - doorDeathFont:getWidth("You got crushed"), height/2 - doorDeathFont:getHeight("You got crushed"), 0.0, 2.0) 
 			end
 			love.graphics.setColor(1, 0, 0)
 		else

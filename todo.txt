@@ -3,9 +3,7 @@ In order of priority
 
 finish making levels
 draw order of bi-directional doors
-add breakable block texture ("fragile")
 Add checkpoints
 touching spikes decreases global score
-change death door text
 Make glass respawn
 make decent menu graphics
