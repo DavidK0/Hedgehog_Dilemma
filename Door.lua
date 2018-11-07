@@ -7,8 +7,6 @@ function Door(world, x, y, width, height, movement, axis, button, toggle, mode)
 		texture = doorImg,
 		texture2 = doorImg2,
 		update = doorUpdate,
-		minx = x,
-		maxx = x+movement,
 		direction = true,
 		axis = axis,
 		speed = 120,
@@ -19,11 +17,15 @@ function Door(world, x, y, width, height, movement, axis, button, toggle, mode)
 		toggle = toggle,
 		goal = x,
 		tag = "Door",
-		reset = doorReset
+		reset = doorReset,
+		--facing = facing --the direction the door opens, 1 for right/up, -1 for left/down
 	}
 	if axis == 1 then
 		door.minx = y
 		door.maxx = y+movement
+	else --axis == 0
+		door.minx = x
+		door.maxx = x+movement
 	end
 	door.fixture = love.physics.newFixture(door.body, door.shape)
 	door.fixture:setUserData(door)
@@ -59,11 +61,11 @@ function doorUpdate(door, dt)
 			end
 		else
 			if(math.abs(door.goal-y) < door.speed*dt/2) then
-					if(door.goal == door.maxx) then
-						door.goal = door.minx
-					else
-						door.goal = door.maxx
-					end
+				if(door.goal == door.maxx) then
+					door.goal = door.minx
+				else
+					door.goal = door.maxx
+				end
 			end
 		end
 	elseif(door.state == 2) then

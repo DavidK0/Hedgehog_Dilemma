@@ -2,11 +2,11 @@ In order of priority
 --------------------
 
 finish making levels
-make decent menu graphics: i guesse they're done
-touching spikes decreases global score
-randomize wall texture: done
-randomize spike texture: in progress
-make player hitbox elliptical: in progress
-change death door text
+finish bi-directional door parser
+draw order of bi-directional doors
+add breakable block texture ("fragile")
 Add checkpoints
+touching spikes decreases global score
+change death door text
 Make glass respawn
+make decent menu graphics
