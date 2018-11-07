@@ -2,7 +2,6 @@ In order of priority
 --------------------
 
 finish making levels
-finish bi-directional door parser
 draw order of bi-directional doors
 add breakable block texture ("fragile")
 Add checkpoints

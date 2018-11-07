@@ -39,12 +39,12 @@ function updateAcres(dt)
 	end
 end
 
---slides to the left/down: ({[<
---slides to the right/up: )}]>
+--slides to the left/up: ({[<
+--slides to the right/down: )}]>
 --<> --stay open, toggle open
 --[] --stay open, push to open
---() --open/close, toggle open
---{} --open/close, push to open
+--{} --open/close, toggle open
+--() --open/close, push to open
 function loadMap(file)
 	local f = love.filesystem.newFile(file, "r")
 	local x = 0
@@ -61,9 +61,18 @@ function loadMap(file)
 			d = string.sub(s,2,2)
 		
 			local toggle = d == "!"
-			local mode = 1
-			if(d == "^" or d == "]" or d == "[") then 
+			local mode
+			if(d == "]") or (d == "[") or (d == "<") or (d == ">") then 
 				mode = 2
+			else
+				mode = 1
+			end
+			
+			local toggleType
+			if(d == "<") or (d == ">") or (d == "{") or (d == "}") then
+				toggleType = true
+			else
+				toggleType = false
 			end
 			
 			local direction
@@ -75,9 +84,9 @@ function loadMap(file)
 			if c == "#" then
 				table.insert(objects, Wall(world, x*wallThickness + wallThickness/2, y*wallThickness + wallThickness/2, wallThickness, wallThickness))
 			elseif string.match(c, "[A-M]") then
-				table.insert(objects, Door(world, x*wallThickness + wallThickness/2, y*wallThickness + wallThickness/2, wallThickness, wallThickness, wallThickness * (2)*direction, 0, c, (d=="!" or d=="^"), mode, direction))
+				table.insert(objects, Door(world, x*wallThickness + wallThickness/2, y*wallThickness + wallThickness/2, wallThickness, wallThickness, wallThickness * (2)*direction, 0, c, toggleType, mode, direction))
 			elseif string.match(c, "[N-Z]") then
-				table.insert(objects ,  Door(world, x*wallThickness + wallThickness/2, y*wallThickness + wallThickness/2, wallThickness, wallThickness, wallThickness * (2)*direction, 1, c, (d=="!" or d=="^"), mode, direction))
+				table.insert(objects ,  Door(world, x*wallThickness + wallThickness/2, y*wallThickness + wallThickness/2, wallThickness, wallThickness, wallThickness * (2)*direction, 1, c, toggleType, mode, direction))
 			elseif c == "1" then
 				player1.spawn = {}
 				player1.spawn.x = x*wallThickness + wallThickness/2
