@@ -7,8 +7,6 @@ function defineAcreLayout(file)
 	file = file or "/assets/acreMap.txt"
 	local f = love.filesystem.newFile(file, "r")
 	
-	local acreSize = 14
-	
 	local y = 0
 	for line in f:lines() do
 		local x = 0
@@ -16,13 +14,13 @@ function defineAcreLayout(file)
 			if (s ~= " ") then
 				loadMap("/assets/acres/acre" .. s .. ".txt", x, y)
 			end
-			x = x + acreSize
+			x = x + tilesOnScreen
 		end
-		y = y + acreSize
+		y = y + tilesOnScreen
 	end
 end
 
-function updateAcres(dt)
+function updateCamera(dt)
 	local x1, y1 = player1.body:getPosition()
 	local x2, y2 = player2.body:getPosition()
 	if not respawn then
@@ -64,54 +62,54 @@ function loadMap(file)
 			local mode
 			if(d == "]") or (d == "[") or (d == "<") or (d == ">") then 
 				mode = 2
-			else
+			else -- if(d == "]") or (d == "[") or (d == "{") or (d == "}")
 				mode = 1
 			end
 			
 			local toggleType
 			if(d == "<") or (d == ">") or (d == "{") or (d == "}") then
 				toggleType = true
-			else
+			else -- if(d == "(") or (d == ")") or (d == "[") or (d == "]") then
 				toggleType = false
 			end
 			
 			local direction
 			if (d == "(") or (d == "{") or (d == "[") or (d == "<") then
 				direction = -1
-			else--if (d == ")") or (d == "}") or (d == "]") or (d == ">") then
+			else --if (d == ")") or (d == "}") or (d == "]") or (d == ">") then
 				direction = 1
 			end
 			if c == "#" then
-				table.insert(objects, Wall(world, x*wallThickness + wallThickness/2, y*wallThickness + wallThickness/2, wallThickness, wallThickness))
+				table.insert(objects, Wall(world, x*tileThickness + tileThickness/2, y*tileThickness + tileThickness/2, tileThickness, tileThickness))
 			elseif string.match(c, "[A-M]") then
-				table.insert(objects, Door(world, x*wallThickness + wallThickness/2, y*wallThickness + wallThickness/2, wallThickness, wallThickness, wallThickness * (2)*direction, 0, c, toggleType, mode, direction))
+				table.insert(objects, Door(world, x*tileThickness + tileThickness/2, y*tileThickness + tileThickness/2, tileThickness, tileThickness, tileThickness * (2)*direction, 0, c, toggleType, mode, false))
 			elseif string.match(c, "[N-Z]") then
-				table.insert(objects ,  Door(world, x*wallThickness + wallThickness/2, y*wallThickness + wallThickness/2, wallThickness, wallThickness, wallThickness * (2)*direction, 1, c, toggleType, mode, direction))
+				table.insert(objects ,  Door(world, x*tileThickness + tileThickness/2, y*tileThickness + tileThickness/2, tileThickness, tileThickness, tileThickness * (2)*direction, 1, c, toggleType, mode, false))
 			elseif c == "1" then
 				player1.spawn = {}
-				player1.spawn.x = x*wallThickness + wallThickness/2
-				player1.spawn.y = y*wallThickness + wallThickness/2
+				player1.spawn.x = x*tileThickness + tileThickness/2
+				player1.spawn.y = y*tileThickness + tileThickness/2
 				player1.body:setPosition(player1.spawn.x, player1.spawn.y)
 			elseif c == "2" then
 				
 				player2.spawn = {}
-				player2.spawn.x = x*wallThickness + wallThickness/2
-				player2.spawn.y = y*wallThickness + wallThickness/2
+				player2.spawn.x = x*tileThickness + tileThickness/2
+				player2.spawn.y = y*tileThickness + tileThickness/2
 				player2.body:setPosition(player2.spawn.x, player2.spawn.y)
 			elseif string.match(c, '[a-z]')then
 				if(not(toggle)) then
-					table.insert(objects, Button(world, x*wallThickness + wallThickness/2, y*wallThickness + wallThickness/2, wallThickness, wallThickness, c))
+					table.insert(objects, Button(world, x*tileThickness + tileThickness/2, y*tileThickness + tileThickness/2, tileThickness, tileThickness, c))
 				else
-					table.insert(objects, BlockButton(world, x*wallThickness + wallThickness/2, y*wallThickness + wallThickness/2, wallThickness, wallThickness, c))
+					table.insert(objects, BlockButton(world, x*tileThickness + tileThickness/2, y*tileThickness + tileThickness/2, tileThickness, tileThickness, c))
 				end
 			elseif c == "&" then
-				table.insert(objects, PushableWall(world, x*wallThickness + wallThickness/2, y*wallThickness + wallThickness/2, wallThickness, wallThickness, true))
+				table.insert(objects, PushableWall(world, x*tileThickness + tileThickness/2, y*tileThickness + tileThickness/2, tileThickness, tileThickness, true))
 			elseif c == "@" then
-				table.insert(objects, PushableWall(world, x*wallThickness + wallThickness/2, y*wallThickness + wallThickness/2, wallThickness, wallThickness, false))				
+				table.insert(objects, PushableWall(world, x*tileThickness + tileThickness/2, y*tileThickness + tileThickness/2, tileThickness, tileThickness, false))				
 			elseif c == "$" then
-				WinTrigger(world, x*wallThickness + wallThickness/2, y*wallThickness + wallThickness/2, wallThickness, wallThickness)
+				table.insert(objects, WinTrigger(world, x*tileThickness + tileThickness/2, y*tileThickness + tileThickness/2, tileThickness, tileThickness))
 			elseif c == "%" then
-				table.insert(objects, GlassWall(world, x*wallThickness + wallThickness/2, y*wallThickness + wallThickness/2, wallThickness, wallThickness))
+				table.insert(objects, GlassWall(world, x*tileThickness + tileThickness/2, y*tileThickness + tileThickness/2, tileThickness, tileThickness))
 			end
 			x = x + 1
 		end
@@ -139,25 +137,25 @@ function constrainToScreen()
 	local x2, y2 = player2.body:getPosition()
 	x2, y2 = cam:toScreen(x2,y2)
 	
-	if (x1 < 0) or (x1 > width) then
+	if (x1 < 0) or (x1 > screenWidth) then
 		local tempPX, tempPY = player1.body:getPosition()
 		player1.body:setPosition(pXOld1, tempPY)
 		local tempVX, tempVY = player1.body:getLinearVelocity()
 		player1.body:setLinearVelocity(0, tempVY)
 	end
-	if (y1 < 0) or (y1 > height) then
+	if (y1 < 0) or (y1 > screenHeight) then
 		local tempPX, tempPY = player1.body:getPosition()
 		player1.body:setPosition(tempPX, pYOld1)
 		local tempVX, tempVY = player1.body:getLinearVelocity()
 		player1.body:setLinearVelocity(tempVX, 0)
 	end
-	if (x2 < 0) or (x2 > width) then
+	if (x2 < 0) or (x2 > screenWidth) then
 		local tempPX, tempPY = player2.body:getPosition()
 		player2.body:setPosition(pXOld2, tempPY)
 		local tempVX, tempVY = player2.body:getLinearVelocity()
 		player2.body:setLinearVelocity(0, tempVY)
 	end
-	if (y2 < 0) or (y2 > height) then
+	if (y2 < 0) or (y2 > screenHeight) then
 		local tempPX, tempPY = player2.body:getPosition()
 		player2.body:setPosition(tempPX, pYOld2)
 		local tempVX, tempVY = player2.body:getLinearVelocity()

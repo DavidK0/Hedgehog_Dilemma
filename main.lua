@@ -12,28 +12,27 @@ require "Physics"
 gamera = require "Gamera"
 --comment
 function love.load()
-	loadImgs("/assets/")
-	respawn = false
-	hasWon = false
+	loadImgs("/assets/") -- loads .png, .jpg, jpeg, and .mp3
+	respawn = false -- global variable, true if either player has died
+	hasWon = false -- true if both players have readed the $
 	spikeDeathRespawnDelay = 50
-	respawnTimer = 0
-	width = love.graphics.getWidth() --Screen width
-	height = love.graphics.getHeight() --Screen height
+	respawnTimer = 0 -- delay between death of player and reset of player/objects
+	screenWidth = love.graphics.getWidth() --Screen width
+	screenHeight = love.graphics.getHeight() --Screen height
 	world = love.physics.newWorld(0, 0, true) -- meter defaults to 30
-	world:setCallbacks(beginContact, endContact, preSolve, postSolve)
-	player1 = Player(world, width/2, height/2, {up = "w", down = "s", left = "a", right = "d"}, 4.0, true)
-	player2 = Player(world, width/2 + 50, height/2, {up = "up", down = "down", left  = "left", right = "right"}, 3.0, true)
-	objects = {}
-	wallThickness = 600.0/14
-	worldWidth, worldHeight = loadMap("/assets/map.txt")
-	--currentTrack:setLooping(true)
-	--currentTrack:play()
-	cam = gamera.new(0,0,77*worldWidth,77*worldHeight)
+	world:setCallbacks(beginContact, endContact, preSolve, postSolve) -- callbuack functions used by the physics engine
+	player1 = Player(world, screenWidth/2, screenHeight/2, {up = "w", down = "s", left = "a", right = "d"}, 4.0, true) -- player 1 w/ controls
+	player2 = Player(world, screenWidth/2 + 50, screenHeight/2, {up = "up", down = "down", left  = "left", right = "right"}, 3.0, true) --player 2 w/ controls
+	objects = {} -- array to hold all objects
+	tilesOnScreen = 14 --number of tile that are displayed in one screen
+	tileThickness = screenWidth/tilesOnScreen -- size of each tile
+	worldWidth, worldHeight = loadMap("/assets/map.txt") --loads the map
+	cam = gamera.new(0,0,77*worldWidth,77*worldHeight) --sets camera based on map size; later changed for camera shake
 	gameState = "title" --"title", "mainMenu", "controls", "game", or "win"
-	menuTimer = newTimer()
-	titleDelay = 1
-	killedByDoor = false
-	camShake = 0
+	menuTimer = newTimer() -- timer used for title screen fade in
+	titleDelay = 1 -- amount of seconds the title fades in
+	killedByDoor = false -- if cause of death is a door; used in door death animation
+	camShake = 0 -- intensity of camShake; increases over time
 end
 
 function love.keypressed(k)
@@ -54,18 +53,22 @@ function love.update(dt)
 	if gameState == "mainMenu" then
 		playRandomTrack()
 	elseif gameState == "game" then
-		playRandomTrack()
+		playRandomTrack() -- play music
+		
 		player1:update(dt)
 		player2:update(dt)
 		world:update(dt)
-		constrainToScreen()
+		
+		constrainToScreen() --constrain players' position to visable screen
+		
+		--update all objects
 		for k, v in ipairs(objects) do
 			if(v.update ~= nil) then
 				v:update(dt)
 			end
 		end
-		if respawn then
-			if respawnTimer <= 0 then
+		if respawn then -- if a player has died
+			if respawnTimer <= 0 then -- if respawnTimer has hit zero, reset all objects and destroy all spikes
 				for k = #objects, 1, -1 do
 					v = objects[k]
 					if(v.reset ~= nil) then
@@ -76,14 +79,12 @@ function love.update(dt)
 						table.remove(objects, k)
 					end
 				end
-				player1.body:setLinearVelocity(0, 0)
-				player1.body:setAngle(math.pi)
-				player1.body:setPosition(player1.spawn.x, player1.spawn.y)
-				player1.flashTimer.time = 0
-				player2.body:setLinearVelocity(0, 0)
-				player2.body:setAngle(math.pi)
-				player2.body:setPosition(player2.spawn.x, player2.spawn.y)
-				player2.flashTimer.time = 0
+				
+				-- reset players
+				resetPlayer(player1)
+				resetPlayer(player2)
+				
+				-- reset death trackers
 				respawn = false
 				player1.respawn = false
 				player2.respawn = false
@@ -92,19 +93,19 @@ function love.update(dt)
 			respawnTimer = respawnTimer - 1
 			
 		end
-		updateAcres(dt)
-		if hasWon then
+		updateCamera(dt) -- update camera position/camera shake
+		if (player1.won and player2.won) then -- both players reached $
 			gameState = "win"
 			kongrad:play()
 		end
-	elseif gameState == "win" then
+	elseif gameState == "win" then -- both players reached $
 		if not kongrad:isPlaying() then
 			love.event.quit()
 		end
 	end
-	if(player1.won and player2.won) then
+	--[[if(player1.won and player2.won) then  -- both players reached $
 		hasWon = true
-	end
+	end]]
 end
 
 function love.draw()
@@ -118,9 +119,9 @@ function love.draw()
 	elseif gameState == "controls" then
 		love.graphics.draw(controlsImg, 0, 0)
 	elseif gameState == "game" then
-		cam:draw(function(l,t,w,h)
-			for x = 1, 10000, background:getWidth() do
-				for y = 1, 10000, background:getHeight() do
+		cam:draw(function(l,t,w,h) -- draw most things relative to the camera
+			for x = -background:getWidth(), 10000, background:getWidth() do
+				for y = -background:getHeight(), 10000, background:getHeight() do
 					love.graphics.draw(background, x, y, 0, 1)
 				end
 			end
@@ -137,10 +138,10 @@ function love.draw()
 				love.graphics.setColor(0, 0, 0)
 				local doorAnimationX = math.max(-((spikeDeathRespawnDelay - respawnTimer)/spikeDeathRespawnDelay)+.5,0)
 				--print(doorAnimationX)
-				love.graphics.rectangle("fill", width * doorAnimationX, 0, width*4, height)
+				love.graphics.rectangle("fill", screenWidth * doorAnimationX, 0, screenWidth*4, screenHeight)
 				love.graphics.setColor(1, 1, 1)		
 				love.graphics.setFont(doorDeathFont)
-				love.graphics.print("You got crushed", width * doorAnimationX + width/2 - doorDeathFont:getWidth("You got crushed"), height/2 - doorDeathFont:getHeight("You got crushed"), 0.0, 2.0) 
+				love.graphics.print("You got crushed", screenWidth * doorAnimationX + screenWidth/2 - doorDeathFont:getWidth("You got crushed"), screenHeight/2 - doorDeathFont:getHeight("You got crushed"), 0.0, 2.0) 
 			end
 			love.graphics.setColor(1, 0, 0)
 		else

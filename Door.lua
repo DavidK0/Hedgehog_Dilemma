@@ -1,4 +1,5 @@
-function Door(world, x, y, width, height, movement, axis, button, toggle, mode)
+function Door(world, x, y, width, height, movement, axis, button, toggle, mode, flip)
+	flip = flip or false -- true for toggle to CLOSE instead of OPEN
 	local door = {
 		body = love.physics.newBody(world, x, y),
 		shape = love.physics.newRectangleShape(width, height),
@@ -21,11 +22,21 @@ function Door(world, x, y, width, height, movement, axis, button, toggle, mode)
 		--facing = facing --the direction the door opens, 1 for right/up, -1 for left/down
 	}
 	if axis == 1 then
-		door.minx = y
-		door.maxx = y+movement
+		if not flip then
+			door.minx = y
+			door.maxx = y+movement
+		else
+			door.maxx = y
+			door.minx = y+movement
+		end
 	else --axis == 0
-		door.minx = x
-		door.maxx = x+movement
+		if not flip then
+			door.minx = x
+			door.maxx = x+movement
+		else
+			door.maxx = x
+			door.minx = x+movement
+		end
 	end
 	door.fixture = love.physics.newFixture(door.body, door.shape)
 	door.fixture:setUserData(door)
@@ -100,9 +111,9 @@ function drawdoor(door)
 	local x,y = door.body:getPosition()
 	love.graphics.setColor(1.0, 1.0, 1.0)
 	if(door.axis == 0) then
-		love.graphics.draw(door.texture2, x - wallThickness/2, y - wallThickness/4, 0.0, wallThickness/door.texture2:getWidth() , wallThickness/door.texture2:getHeight()/2)
+		love.graphics.draw(door.texture2, x - tileThickness/2, y - tileThickness/4, 0.0, tileThickness/door.texture2:getWidth() , tileThickness/door.texture2:getHeight()/2)
 	else
-		love.graphics.draw(door.texture, x - wallThickness/4, y - wallThickness/2, 0.0, wallThickness/door.texture:getWidth()/2 , wallThickness/door.texture:getHeight())		
+		love.graphics.draw(door.texture, x - tileThickness/4, y - tileThickness/2, 0.0, tileThickness/door.texture:getWidth()/2 , tileThickness/door.texture:getHeight())		
 	end
 	--[[for k, button in ipairs(door.buttons) do
 		if(button.active > 0) then

@@ -66,10 +66,10 @@ function drawbutton(button)
 	local x, y = button.body:getPosition()
 	
 	if (button.active > 0) then
-		love.graphics.draw(button.textureDown, x - wallThickness/2, y - wallThickness/2, 0.0,0.5, 0.5)
+		love.graphics.draw(button.textureDown, x - tileThickness/2, y - tileThickness/2, 0.0,0.5, 0.5)
 	end
 	if (button.active < 1) then
-		love.graphics.draw(button.textureUp, x - wallThickness/2, y - wallThickness/2, 0.0,0.5, 0.5)
+		love.graphics.draw(button.textureUp, x - tileThickness/2, y - tileThickness/2, 0.0,0.5, 0.5)
 	end
 	--love.graphics.rectangle("fill", x - button.width/2, y - button.height/2, button.width, button.height)
 		

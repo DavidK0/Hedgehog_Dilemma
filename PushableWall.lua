@@ -50,5 +50,5 @@ function drawpushableWall(pushableWall)
 	love.graphics.setColor(1.0, 1.0, 1.0)
 	--love.graphics.polygon("fill", pushableWall.body:getWorldPoints(pushableWall.shape:getPoints()))
 	local x, y = pushableWall.body:getPosition()
-	love.graphics.draw(pushableWall.texture, x - wallThickness/2, y - wallThickness/2, 0.0,wallThickness/pushableWall.texture:getWidth(), wallThickness/pushableWall.texture:getHeight())
+	love.graphics.draw(pushableWall.texture, x - tileThickness/2, y - tileThickness/2, 0.0,tileThickness/pushableWall.texture:getWidth(), tileThickness/pushableWall.texture:getHeight())
 end

@@ -4,7 +4,7 @@ loadSpikes()
 
 hedgehogScale =2.1
 
-function Player(world, x, y, c, p, f)
+function Player(world, x, y, controls, prickleTime, fireSpikes)
 	local player = {
 		height = 50,
 		width = 25,
@@ -13,19 +13,19 @@ function Player(world, x, y, c, p, f)
 		acceleration = 4000,
 		update = playerUpdate,
 		draw = drawPlayer,
-		controls = c,
+		controls = controls, -- table containing the controls
 		texture = hedgeTexture,
 		flashBPM = 120.0/4,
 		currColor = 0.0,
 		turning = 80000,
-		prickleTime = p or 4.0,
+		prickleTime = prickleTime or 3, -- shooting rate in seconds
 		tag = "Player",
 		respawn = false,
 		deathPointX = 0,
 		deathPointY = 0,
 		doorCollision = nil,
 		won = false,
-		fireSpikes = f
+		fireSpikes = fireSpikes -- false if the player doesn't shoot spikes; used for testing
 	}
 	
 	player.width = player.texture:getWidth()/hedgehogScale
@@ -177,6 +177,13 @@ function playerUpdate(player, dt)
 		player.body:setPosition(x + (player.spawn.x-x)/20, y+(player.spawn.y-y)/20)
 		
 	end
+end
+
+function resetPlayer(player)
+	player.body:setLinearVelocity(0, 0)
+	player.body:setAngle(math.pi)
+	player.body:setPosition(player.spawn.x, player.spawn.y)
+	player.flashTimer.time = 0
 end
 
 function drawPlayer(player)

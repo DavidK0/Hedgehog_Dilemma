@@ -26,6 +26,7 @@ function loadImgs(root)
 	doorImg = love.graphics.newImage(root .. "door.png")
 	doorImg2 = love.graphics.newImage(root .. "door2.png")
 	glassImg = love.graphics.newImage(root .. "glass.png")
+	finishImg = love.graphics.newImage(root .. "finish.jpg")
 	buttonUpImg = love.graphics.newImage(root .. "buttonUp.png")
 	buttonDownImg = love.graphics.newImage(root .. "buttonDown.png")
 	hedgeTexture = love.graphics.newImage(root .. "hedge.png")
@@ -46,7 +47,7 @@ end
 
 function playRandomTrack()
 	if not currentTrack:isPlaying() then
-		currentTrack = tracks[math.random(10)]
-		currentTrack:play()
+		--currentTrack = tracks[math.random(10)]
+		--currentTrack:play()
 	end
 end

@@ -6,4 +6,19 @@ draw order of bi-directional doors
 Add checkpoints
 touching spikes decreases global score
 Make glass respawn
+fix player moving along opposite diagnol
 make decent menu graphics
+add comments
+buttons that connect to vertical AND horizontal doors
+
+Level Ideas
+-----------
+revolving doors
+fragile blocks
+reverse doors
+no-turn tunnels
+	. . . . . # # #
+	. . . . . # . #
+	# # # # # # . # 
+	. . . . . . . # 
+	# # # # # # # # 

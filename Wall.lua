@@ -21,5 +21,5 @@ function drawWall(wall)
 	love.graphics.setColor(1.0, 1.0, 1.0)
 	--love.graphics.polygon("fill", wall.body:getWorldPoints(wall.shape:getPoints()))
 	local x, y = wall.body:getPosition()
-	love.graphics.draw(wall.texture, x - wallThickness/2, y - wallThickness/2, 0.0,wallThickness/wall.texture:getWidth(), wallThickness/wall.texture:getHeight())
+	love.graphics.draw(wall.texture, x - tileThickness/2, y - tileThickness/2, 0.0,tileThickness/wall.texture:getWidth(), tileThickness/wall.texture:getHeight())
 end

@@ -8,6 +8,8 @@ function WinTrigger(world, x, y, width, height)
 	trigger.endCollision = triggerEndCollision
 	trigger.fixture:setSensor(true)
 	trigger.fixture:setUserData(trigger)
+	trigger.draw = drawWall
+	trigger.texture = finishImg
 	return trigger
 end
 
