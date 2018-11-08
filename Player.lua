@@ -31,12 +31,26 @@ function Player(world, x, y, controls, prickleTime, fireSpikes)
 	player.width = player.texture:getWidth()/hedgehogScale
 	player.height = player.texture:getHeight()/hedgehogScale
 	
-	player.shape = love.physics.newPolygonShape(-player.width/2*.9, 0,
+	--[[player.shape = love.physics.newPolygonShape(-player.width/2*.9, 0,
 												-player.width/2*.8, player.height/2*.8,
 												0, player.height/2,
 												player.width/2*.8, player.height/2*.8,
 												player.width/2*.9, 0,
-												0, -player.height/2)
+												0, -player.height/2)]]
+	--[[player.shape = love.physics.newPolygonShape(-player.width/2*.9, 0,
+												-player.width/2*.8, player.height/2*.8,
+												0, player.height/2, --butt
+												player.width/2*.8, player.height/2*.8,
+												player.width/2*.9,0,
+												-player.width/2*.8, -player.height/2, --nose
+												player.width/2*.8, -player.height/2) --nose]]
+	player.shape = love.physics.newPolygonShape(-player.width/2*.9, 0,
+												-player.width/2*.8, player.height/2*.8,
+												0, player.height/2, --butt
+												player.width/2*.8, player.height/2*.8,
+												player.width/2*.9,0,
+												-player.width/2*.4, -player.height/2, --nose
+												player.width/2*.4, -player.height/2) --nose
 	player.fixture = love.physics.newFixture(player.body, player.shape)
 	player.body:setLinearDamping(10.0)
 	player.body:setFixedRotation(false)
